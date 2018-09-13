@@ -1,6 +1,6 @@
 ---
 title: "Lab 2"
-author: "Collin Loy"
+author: "Collin Loy, Michelle Cryder"
 date: "September 13, 2018"
 output: html_document
 ---
