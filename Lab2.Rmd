@@ -1,0 +1,58 @@
+---
+title: "Lab 2"
+author: "Collin Loy"
+date: "September 13, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Loading Data
+
+```{r}
+
+choco <- read.csv("https://ds202-at-isu.github.io/labs/data/choco.csv")
+head(choco)
+
+```
+
+## Question Set Team
+
+1. What is the overall number of chocolate bars rated?
+
+1852 Chocolate bars
+
+2. How does the number of ratings depend on the year? Draw a bar chart of the number of reports
+
+```{r}
+
+library(ggplot2)
+
+choco <- read.csv("https://ds202-at-isu.github.io/labs/data/choco.csv")
+
+
+count = c()
+k = 1
+for (i in 2006 : 2017){
+  count[k] = sum(choco$Review.Date == i)
+  k = k + 1
+}
+
+year = c(2006 : 2017)
+
+DataYear = cbind(year, count)
+
+
+ggplot(aes(x = year), data = as.data.frame(DataYear)) +
+  geom_bar(aes(weight= count)) +
+  coord_flip()
+
+
+```
+
+3. Upload your RMarkdown file to the repository
+
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
