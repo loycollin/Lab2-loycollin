@@ -46,13 +46,63 @@ DataYear = cbind(year, count)
 
 
 ggplot(aes(x = year), data = as.data.frame(DataYear)) +
-  geom_bar(aes(weight= count)) +
-  coord_flip()
+  geom_bar(aes(weight= count)) 
 
 
 ```
+<br>
 
-3. Upload your RMarkdown file to the repository
+## Question set (individual)
+
+
+3. For each of the questions below  provide at least one graphic as a basis for your answer.
+    1. How are ratings distributed? Draw a histogram of ratings and describe it. Don't forget to mention outliers, if there are any.
+        + There is a normal distribution, slightly skewed left? 
+    
+```{r}
+ggplot(choco, aes(x = Rating)) + geom_histogram(binwidth = 0.25) + ggtitle("Ratings Distribution") + xlab("Rating") + ylab("Count")
+
+```
+<br>    
+    
+  2. Do ratings depend on the cocoa percentage of a chocolate bar? 
+      + No correlation
+```{r}
+ggplot(data = choco, aes(x = Cocoa.Pct, y = Rating)) + geom_jitter() + ggtitle("Cocoa Percentage vs Rating") + xlab("Cocoa %") + ylab("Rating")
+
+```
+<br> 
+
+  3. How do ratings compare across different company locations? Focus on the three locations with the most ratings:
+      + Similar medians, Canada has a higher pecentage with higher ratings.
+    
+```{r, message=FALSE}
+top3 <- dplyr::filter(choco, Company.Location %in% c("U.S.A.", "France", "Canada"))
+ggplot(data = top3, aes(x = Company.Location, y = Rating)) + geom_boxplot() + coord_flip() + ggtitle("Company Location Ratings") + ylab("Rating") + xlab("Company Location")
+
+```
+
+<br>
+
+## Your own question? (team)
+
+1. Discuss a question you want to investigate.
+
+```{r}
+ggplot(top3, aes(x = Cocoa.Pct)) + geom_histogram(binwidth = 5, bins=20) + ggtitle("Cocoa Percentage Distribution") + facet_wrap(~Company.Location) + xlab("Cocoa %") + ylab("Count")
+
+ggplot(top3, aes(x = Cocoa.Pct, fill=Company.Location)) + geom_histogram(binwidth = 5, bins=20) + ggtitle("Cocoa Percentage Distribution") + xlab("Cocoa %") + ylab("Count")
+
+ggplot(data = top3, aes(x = Cocoa.Pct, y = Rating, colour=Company.Location)) + geom_jitter() + ggtitle("Cocoa Percentage vs Rating") + xlab("Cocoa %") + ylab("Rating")
+
+ggplot(data = top3, aes(x = Company.Location, y = Cocoa.Pct)) + geom_boxplot() + coord_flip() + ggtitle("Cocoa Percentage by Location") + ylab("Cocoa %") + xlab("Company Location")
+
+
+```
+<br>
+
+2. Answer this question by graphs.
+3. Conclusions.
 
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
