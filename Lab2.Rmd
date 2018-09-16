@@ -25,6 +25,7 @@ head(choco)
 1852 Chocolate bars
 
 2. How does the number of ratings depend on the year? Draw a bar chart of the number of reports
+  + The amount of ratings seems to be on a fairly stead increase until after 2015 when you see a major drop off.
 
 ```{r}
 
@@ -57,7 +58,7 @@ ggplot(aes(x = year), data = as.data.frame(DataYear)) +
 
 3. For each of the questions below  provide at least one graphic as a basis for your answer.
     1. How are ratings distributed? Draw a histogram of ratings and describe it. Don't forget to mention outliers, if there are any.
-        + There is a normal distribution, slightly skewed left? 
+        + There is almost a  normal distribution, but slightly skewed left.
     
 ```{r}
 ggplot(choco, aes(x = Rating)) + geom_histogram(binwidth = 0.25) + ggtitle("Ratings Distribution") + xlab("Rating") + ylab("Count")
@@ -67,14 +68,22 @@ ggplot(choco, aes(x = Rating)) + geom_histogram(binwidth = 0.25) + ggtitle("Rati
     
   2. Do ratings depend on the cocoa percentage of a chocolate bar? 
       + No correlation
+      + Though cocoa percentage doesnt seem to affect rating; some countries seem to have different preferences for the amount in there chocolate.
 ```{r}
+
 ggplot(data = choco, aes(x = Cocoa.Pct, y = Rating)) + geom_jitter() + ggtitle("Cocoa Percentage vs Rating") + xlab("Cocoa %") + ylab("Rating")
+
+top3 <- dplyr::filter(choco, Company.Location %in% c("U.S.A.", "France", "Canada"))
+
+ggplot(data = top3, aes(x = Cocoa.Pct, y = Company.Location)) + geom_jitter() + ggtitle("Cocoa Percentage vs Rating") + xlab("Cocoa %") + ylab("Rating")
+
 
 ```
 <br> 
 
   3. How do ratings compare across different company locations? Focus on the three locations with the most ratings:
       + Similar medians, Canada has a higher pecentage with higher ratings.
+      + Outliers for USA and France torward the Lower end of the scale and france seems to have less ratings below 2.5 than the other countries.
     
 ```{r, message=FALSE}
 top3 <- dplyr::filter(choco, Company.Location %in% c("U.S.A.", "France", "Canada"))
@@ -87,7 +96,12 @@ ggplot(data = top3, aes(x = Company.Location, y = Rating)) + geom_boxplot() + co
 ## Your own question? (team)
 
 1. Discuss a question you want to investigate.
+  + We decided to look deeper into which of the top three countries and which had a higher cocoa percentage in there chocolate. 
 
+<br>
+
+2. Answer this question by graphs.
+  
 ```{r}
 ggplot(top3, aes(x = Cocoa.Pct)) + geom_histogram(binwidth = 5, bins=20) + ggtitle("Cocoa Percentage Distribution") + facet_wrap(~Company.Location) + xlab("Cocoa %") + ylab("Count")
 
@@ -95,14 +109,15 @@ ggplot(top3, aes(x = Cocoa.Pct, fill=Company.Location)) + geom_histogram(binwidt
 
 ggplot(data = top3, aes(x = Cocoa.Pct, y = Rating, colour=Company.Location)) + geom_jitter() + ggtitle("Cocoa Percentage vs Rating") + xlab("Cocoa %") + ylab("Rating")
 
-ggplot(data = top3, aes(x = Company.Location, y = Cocoa.Pct)) + geom_boxplot() + coord_flip() + ggtitle("Cocoa Percentage by Location") + ylab("Cocoa %") + xlab("Company Location")
+#ggplot(data = top3, aes(x = Company.Location, y = Cocoa.Pct)) + geom_boxplot() + coord_flip() + ggtitle("Cocoa Percentage by Location") + ylab("Cocoa %") + xlab("Company Location")
+
+ggplot(data = top3, aes(x = reorder(Company.Location, Cocoa.Pct, FUN=median), y = Cocoa.Pct)) + geom_boxplot() + coord_flip() + ggtitle("Cocoa Percentage by Location") + ylab("Cocoa %") + xlab("Company Location")
 
 
 ```
-<br>
 
-2. Answer this question by graphs.
 3. Conclusions.
-
+  + The graphs we created show that France seems to have a higher median for cocoa percentage than hte USA and Canada; whos medians are nearly equal
+  + This helps confirm what we saw when comparing Ratings vs Cocoa Percentage that though it has little affect on ratings; different countries shows different preferences.
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
