@@ -119,5 +119,15 @@ ggplot(data = top3, aes(x = reorder(Company.Location, Cocoa.Pct, FUN=median), y 
 3. Conclusions.
   + The graphs we created show that France seems to have a higher median for cocoa percentage than hte USA and Canada; whos medians are nearly equal
   + This helps confirm what we saw when comparing Ratings vs Cocoa Percentage that though it has little affect on ratings; different countries shows different preferences.
+  
+  
+## Paragraph and githublink
+
+click [here](https://github.com/loycollin/Lab2-loycollin/blob/master/Lab2.Rmd) for the github link
+
+Workflow:
+  
+  When we started in the lab work flow and communication was simple and straight forward as we just followed the questions and discussed ways to  complete the work, but this changed as we got out of class. Most of us as students are used to working in groups but with coding sometimes chages made can be less obvious so we communicated through social media and left comments via github; well both doing what we could. Overall I would say that the workflow was still fairly smooth, but for more complex assignments in the future; better detailed notes on github about coding changes may be a good change to make; as we discuss what to do through other communication platforms.
+
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
